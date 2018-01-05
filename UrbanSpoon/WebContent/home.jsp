@@ -35,7 +35,7 @@
 
 <div id="login">
 	<h3>Login</h3>
-	<form name="login_form" action="UrbanspoonController" method="post">
+	<form name="login_form" action="UrbanSpoonController" method="post">
 		<input type="hidden" name="action" value="login"> <label>UserId</label>:<input
 			type="text" name="user_id"><br> <label>Password</label>:<input
 			type="password" name="password"><br> <label>Login
@@ -47,7 +47,7 @@
 
 <div id="user_registration">
 	<h3>User Register</h3>
-	<form name="user_registration_form" action="UrbanspoonController" method="post">
+	<form name="user_registration_form" action="UrbanSpoonController" method="post">
 		<input type="hidden" name="action" value="user_registration">
 		<input type="text" name="firstName" placeholder="Enter FirstName" required /><br> 
 		<input type="text" name="lastName"	placeholder="Enter LastName" required /><br> 

@@ -44,9 +44,10 @@ public class UrbanSpoonService {
 		String email = request.getParameter("email");
 		String gender = request.getParameter("gender");
 		if(gender.equalsIgnoreCase("male")){
-			gender="male";
+			gender="Male";
 		}else
-			gender="female";
+			gender="Female";
+		
 		String pswd = request.getParameter("password");
 		Date date = Date.valueOf(request.getParameter("date"));
 		long number = Long.parseLong(request.getParameter("mobileNumber"));

@@ -46,9 +46,7 @@ public class UrbanSpoonController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
 		}
-		
 	}
 
 }
