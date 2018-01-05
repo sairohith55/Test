@@ -40,7 +40,7 @@ public class UrbanSpoonService {
 
    public static User insertUser(HttpServletRequest request, HttpServletResponse response) throws UrbanspoonException{
 		
-		String name = request.getParameter("firstName ") + request.getParameter("lastName");
+		String name = request.getParameter("firstName") +" "+ request.getParameter("lastName");
 		String email = request.getParameter("email");
 		String gender = request.getParameter("gender");
 		if(gender.equalsIgnoreCase("male")){

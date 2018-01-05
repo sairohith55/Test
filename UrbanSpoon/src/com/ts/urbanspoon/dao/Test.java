@@ -4,7 +4,6 @@ import java.sql.Date;
 
 import com.ts.urbanspoon.dto.User;
 import com.ts.urbanspoon.exception.UrbanspoonException;
-import com.ts.urbanspoon.service.UrbanSpoonService;
 
 public class Test {
 
