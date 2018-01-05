@@ -60,7 +60,7 @@ public class DAOUtility {
 		try {
 			connection = DAOUtility.getConncetion();
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery("select max(id) from "+table);
+			resultSet = statement.executeQuery("select max(user_id) from "+table);
 			if(resultSet.next()){
 				return resultSet.getInt(1);
 			}			

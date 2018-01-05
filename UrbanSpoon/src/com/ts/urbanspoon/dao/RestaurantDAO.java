@@ -18,7 +18,7 @@ public class RestaurantDAO {
 
 		try {
 			con = DAOUtility.getConncetion();
-			String query = "select * from restaurant limit" + TOP;
+			String query = "select * from restaurant limit " + TOP;
 			System.out.println("------>query is:" + query);
 			stmt=con.createStatement();
 			rs = stmt.executeQuery(query);

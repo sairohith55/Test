@@ -1,5 +1,6 @@
 package com.ts.urbanspoon.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,11 +40,15 @@ public class UrbanSpoonService {
 
    public static User insertUser(HttpServletRequest request, HttpServletResponse response) throws UrbanspoonException{
 		
-		String name = request.getParameter("firstName")+request.getParameter("lastName");
+		String name = request.getParameter("firstName ") + request.getParameter("lastName");
 		String email = request.getParameter("email");
 		String gender = request.getParameter("gender");
+		if(gender.equalsIgnoreCase("male")){
+			gender="male";
+		}else
+			gender="female";
 		String pswd = request.getParameter("password");
-		
+		Date date = Date.valueOf(request.getParameter("date"));
 		long number = Long.parseLong(request.getParameter("mobileNumber"));
 		
 		User u = new User();
@@ -51,9 +56,10 @@ public class UrbanSpoonService {
 		u.setEmail(email);
 		u.setGender(gender);
 		u.setPassword(pswd);
+		u.setDate(date);
 		u.setMobileNo(number);
 		
-		User u1= UserDAO.insertUser(u);
+		User u1= UserDAO.insert(u);
 		return u1;
 }
 

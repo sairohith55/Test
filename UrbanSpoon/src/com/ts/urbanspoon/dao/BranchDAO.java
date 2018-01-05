@@ -23,7 +23,7 @@ public class BranchDAO {
 
 		try {
 			con = DAOUtility.getConncetion();
-			String query = "select * from branch where restaurant_id=" +restaurantId;
+			String query = "select * from branch where restaurant_id = " +restaurantId;
 			System.out.println("------>query is:" + query);
 			stmt=con.createStatement();
 			rs = stmt.executeQuery(query);
