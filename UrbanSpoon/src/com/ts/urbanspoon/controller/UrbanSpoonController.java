@@ -58,9 +58,7 @@ public class UrbanSpoonController extends HttpServlet {
 			} catch (UrbanspoonException e) {
 				
 				e.printStackTrace();
-			}
-	
-			
+			}	
 		}
 	}
 }

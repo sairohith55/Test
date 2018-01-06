@@ -18,7 +18,7 @@ public class UserDAO {
 			preparedStatement.setString(2, user.getGender());
 			preparedStatement.setString(3, user.getEmail());
 			preparedStatement.setString(4, user.getPassword());
-			preparedStatement.setDate(5,user.getDate());;
+			preparedStatement.setDate(5,user.getDate());
 			preparedStatement.setLong(6, user.getMobileNo());
 			if (preparedStatement.executeUpdate() > 0) {
 				user.setId(DAOUtility.getLatestId("user"));

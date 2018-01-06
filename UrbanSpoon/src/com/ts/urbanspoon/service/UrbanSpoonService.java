@@ -44,9 +44,9 @@ public class UrbanSpoonService {
 		String email = request.getParameter("email");
 		String gender = request.getParameter("gender");
 		if(gender.equalsIgnoreCase("male")){
-			gender="Male";
+			gender="M";
 		}else
-			gender="Female";
+			gender="F";
 		
 		String pswd = request.getParameter("password");
 		Date date = Date.valueOf(request.getParameter("date"));
@@ -64,7 +64,6 @@ public class UrbanSpoonService {
 		return u1;
 
    }
-
 
    public static User getUser(HttpServletRequest request, HttpServletResponse response) throws UrbanspoonException {
 	   

@@ -80,12 +80,12 @@ public class User {
 	public long getMobileNo() {
 		return mobileNo;
 	}
-
-
-	public void setMobileNo(long mobileNo) {
-		this.mobileNo = mobileNo;
+	public void setMobileNo(long mobileNo){
+		this.mobileNo=mobileNo;
 	}
 
+
+	
 
 	@Override
 	public String toString() {

@@ -9,9 +9,10 @@ import com.ts.urbanspoon.util.DAOUtility;
 public class RestaurantDAO {
 
 	public List<Restaurant> getRestaurants(final int TOP) {
-		// w.r.t query to get Top 10 Restaurants.
+		
 		Restaurant res = null;
 		Connection con = null;
+		
 		Statement stmt = null;
 		ResultSet rs = null;
 		List<Restaurant> list = null;
