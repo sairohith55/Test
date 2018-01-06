@@ -5,7 +5,6 @@ import com.ts.urbanspoon.dto.User;
 import com.ts.urbanspoon.exception.UrbanspoonException;
 import com.ts.urbanspoon.util.DAOUtility;
  
- 
 
 public class UserDAO {
 
