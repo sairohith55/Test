@@ -62,6 +62,19 @@ public class UrbanSpoonService {
 		
 		User u1= UserDAO.insert(u);
 		return u1;
+
+   }
+
+
+   public static User getUser(HttpServletRequest request, HttpServletResponse response) throws UrbanspoonException {
+	   
+	   User u = UserDAO.getUser(Integer.parseInt(request.getParameter("user_id")));
+	   if(u.getPassword().equals(request.getParameter("password"))){
+	
+		   return u;
+	   }
+	   else
+		   return null;
 }
 
 }

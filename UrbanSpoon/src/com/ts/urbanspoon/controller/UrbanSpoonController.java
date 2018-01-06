@@ -1,6 +1,7 @@
 package com.ts.urbanspoon.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -23,7 +24,6 @@ public class UrbanSpoonController extends HttpServlet {
         	System.out.println("Controller is invoked");
         }
 
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Restaurant> rest=UrbanSpoonService.getRestaurants(3);
 		request.setAttribute("restaurantsList",rest);
@@ -43,10 +43,24 @@ public class UrbanSpoonController extends HttpServlet {
 				System.out.println(u.getId());
 				
 			} catch (UrbanspoonException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
+		}else if(s.equalsIgnoreCase("login")){
+			
+			try {
+				User u = UrbanSpoonService.getUser(request,response);
+				
+				PrintWriter w = response.getWriter();
+			
+				w.println("Welcome "+u.getName());
+				
+			} catch (UrbanspoonException e) {
+				
+				e.printStackTrace();
+			}
+	
+			
 		}
 	}
-
 }

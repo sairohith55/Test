@@ -31,4 +31,56 @@ public class UserDAO {
 		}
 		return user;
 	}
+	public static User getUser(int userId) throws UrbanspoonException {
+		User user = null;
+		Connection connection = DAOUtility.getConncetion();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			preparedStatement = connection.prepareStatement("select * from user where user_id=?");
+			preparedStatement.setInt(1, userId);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				user = new User();
+				user.setId(resultSet.getInt(1));
+				user.setName(resultSet.getString(2));
+				user.setGender(resultSet.getString(3));
+				user.setEmail(resultSet.getString(4));
+				user.setPassword(resultSet.getString(5));
+				user.setDate(resultSet.getDate(6));
+				user.setMobileNo(resultSet.getLong(7));
+			}
+		} catch (SQLException e) {
+			throw new UrbanspoonException(e.toString());
+		} finally {
+			DAOUtility.close(resultSet, preparedStatement, connection);
+		}
+		return user;
+	}
+	public static User getUser(String email) throws UrbanspoonException {
+		User user = null;
+		Connection connection = DAOUtility.getConncetion();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			preparedStatement = connection.prepareStatement("select * from user where email=?");
+			preparedStatement.setString(1, email);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				user = new User();
+				user.setId(resultSet.getInt(1));
+				user.setName(resultSet.getString(2));
+				user.setGender(resultSet.getString(3));
+				user.setEmail(resultSet.getString(4));
+				user.setPassword(resultSet.getString(5));
+				user.setDate(resultSet.getDate(6));
+				user.setMobileNo(resultSet.getLong(7));
+			}
+		} catch (SQLException e) {
+			throw new UrbanspoonException(e.toString());
+		} finally {
+			DAOUtility.close(resultSet, preparedStatement, connection);
+		}
+		return user;
+	}
 }
