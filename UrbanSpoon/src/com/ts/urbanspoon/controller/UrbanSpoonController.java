@@ -42,14 +42,25 @@ public class UrbanSpoonController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		if(s.equalsIgnoreCase("login")){			
+		if(s.equalsIgnoreCase("login")){
+			if(request.getParameter("loginAs").equals("user")){
 			try {
 				User u = UrbanSpoonService.getUser(request,response);		
 	     		PrintWriter w = response.getWriter();	
 				w.println("Welcome "+u.getName());		
 			} catch (UrbanspoonException e) {	
 				e.printStackTrace();
-			}	
+			}
+			}
+			if(request.getParameter("loginAs").equals("restaurant")){
+				try {
+					Restaurant r = UrbanSpoonService.getRestaurant(request, response);		
+		     		PrintWriter w = response.getWriter();	
+					w.println("Welcome "+r.getName());		
+				} catch (UrbanspoonException e) {	
+					e.printStackTrace();
+				}
+				}
 		}
 		
 		if(s.equalsIgnoreCase("restaurant_registration")){		

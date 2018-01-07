@@ -51,5 +51,9 @@ public class BranchDAO {
 		return list;
 
 	}
+
+	public static List<Branch> getBranches(int int1, boolean b, boolean c) {
+		return null;
+	}
 	 
 }

@@ -66,4 +66,62 @@ public class RestaurantDAO {
 		}
 		return restaurant;
 	}
+	
+	public static Restaurant getRestaurant(String govtRegistrationId, boolean includeBranches) throws UrbanspoonException {
+		Restaurant restaurant = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = DAOUtility.getConncetion();
+			preparedStatement = connection.prepareStatement("select * from restaurant where govt_registration_id = ?");
+			preparedStatement.setString(1, govtRegistrationId);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				restaurant = new Restaurant();
+				restaurant.setId(resultSet.getInt(1));
+				restaurant.setGovtRegistrationId(resultSet.getString(2));
+				restaurant.setName(resultSet.getString(3));
+				restaurant.setPassword(resultSet.getString(4));
+				restaurant.setLogoName(resultSet.getString(5));
+				if (includeBranches) {
+					restaurant.setBranchesList(BranchDAO.getBranches(resultSet.getInt(1), true,false));
+				}
+			}
+		} catch (SQLException e) {
+			throw new UrbanspoonException(e.toString());
+		} finally {
+			DAOUtility.close(resultSet, preparedStatement, connection);
+		}
+		return restaurant;
+	}
+	
+	public static Restaurant getRestaurant(int restaurantId) throws UrbanspoonException {
+		Restaurant restaurant = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = DAOUtility.getConncetion();
+			preparedStatement = connection.prepareStatement("select * from restaurant where restaurant_id = ?");
+			preparedStatement.setInt(1, restaurantId);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				restaurant = new Restaurant();
+				restaurant.setId(resultSet.getInt(1));
+				restaurant.setGovtRegistrationId(resultSet.getString(2));
+				restaurant.setName(resultSet.getString(3));
+				restaurant.setPassword(resultSet.getString(4));
+				restaurant.setLogoName(resultSet.getString(5));
+				
+			}
+		} catch (SQLException e) {
+			throw new UrbanspoonException(e.toString());
+		} finally {
+			DAOUtility.close(resultSet, preparedStatement, connection);
+		}
+		return restaurant;
+	}
 }

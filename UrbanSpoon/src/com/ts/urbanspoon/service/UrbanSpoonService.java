@@ -93,5 +93,15 @@ public class UrbanSpoonService {
 		Restaurant r1 = RestaurantDAO.insert(r);
 		return r1;
   }
+   
+ public static Restaurant getRestaurant(HttpServletRequest request, HttpServletResponse response) throws UrbanspoonException {
+	   
+	   Restaurant r = RestaurantDAO.getRestaurant(Integer.parseInt(request.getParameter("user_id")));
+	   if(r.getPassword().equals(request.getParameter("password")))
+	   return r;
+	   else
+	   return null;
+
+   }
 
 }
