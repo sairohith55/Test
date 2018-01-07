@@ -1,19 +1,13 @@
 package com.ts.urbanspoon.dao;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.ts.urbanspoon.dto.Branch;
-import com.ts.urbanspoon.dto.Restaurant;
 import com.ts.urbanspoon.util.DAOUtility;
 
 public class BranchDAO {
-	
-	
 	
 	public List<Branch> getBranches(int restaurantId){
 		Connection con = null;
@@ -28,12 +22,10 @@ public class BranchDAO {
 			stmt=con.createStatement();
 			rs = stmt.executeQuery(query);
 			System.out.println("rs:" + rs);
-			list = new ArrayList();
+			list = new ArrayList<Branch>();
 			
 			if (rs.next()) {
-				
 				System.out.println("yes we have a record");
-
 				do {
 					  Branch b = new Branch();
 					  b.setId(rs.getInt(1));
@@ -45,19 +37,17 @@ public class BranchDAO {
 					  b.setEmail(rs.getString(7));
 					  b.setMobileNo(rs.getLong(8));
 					  
-					  list.add(b);
-					 
+					  list.add(b);					 
+				
 				} while (rs.next());
-			} else {
+			} 
+			else {
 				System.out.println("--->no record is available");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
-
-		System.out.println("--------->list:" + list);
-
 		return list;
 
 	}

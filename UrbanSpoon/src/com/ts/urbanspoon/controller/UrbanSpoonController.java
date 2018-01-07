@@ -33,32 +33,34 @@ public class UrbanSpoonController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String s = request.getParameter("action");
-		
-		if(s.equalsIgnoreCase("user_registration")){
-		
-			try {
-				
+		String s = request.getParameter("action");		
+		if(s.equalsIgnoreCase("user_registration")){	
+			try {		
 				User u = UrbanSpoonService.insertUser(request,response);
-				System.out.println(u.getId());
-				
+				System.out.println(u.getId());			
 			} catch (UrbanspoonException e) {
-
 				e.printStackTrace();
 			}
-		}else if(s.equalsIgnoreCase("login")){
-			
+		}
+		if(s.equalsIgnoreCase("login")){			
 			try {
-				User u = UrbanSpoonService.getUser(request,response);
-				
-				PrintWriter w = response.getWriter();
-			
-				w.println("Welcome "+u.getName());
-				
-			} catch (UrbanspoonException e) {
-				
+				User u = UrbanSpoonService.getUser(request,response);		
+	     		PrintWriter w = response.getWriter();	
+				w.println("Welcome "+u.getName());		
+			} catch (UrbanspoonException e) {	
 				e.printStackTrace();
 			}	
+		}
+		
+		if(s.equalsIgnoreCase("restaurant_registration")){		
+			try {
+				Restaurant r = UrbanSpoonService.insertRestaurant(request, response);
+				System.out.println(r.getId());
+				
+			} catch (UrbanspoonException e) {
+				e.printStackTrace();
+			}
+	
 		}
 	}
 }

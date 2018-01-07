@@ -17,13 +17,10 @@ public class DAOUtility {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/urbanspoon", "root", "root");
 			System.out.println("**connection:"+connection);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return connection;
 
 	}
@@ -61,6 +58,24 @@ public class DAOUtility {
 			connection = DAOUtility.getConncetion();
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("select max(user_id) from "+table);
+			if(resultSet.next()){
+				return resultSet.getInt(1);
+			}			
+		} catch (SQLException e) {
+			throw new UrbanspoonException(e.toString());
+		} finally {
+			DAOUtility.close(resultSet,statement,connection);
+		}
+		return -1;
+	}
+	public static int getLatestRestaurantId(String string) throws UrbanspoonException {
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DAOUtility.getConncetion();
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("select max(restaurant_id) from "+string);
 			if(resultSet.next()){
 				return resultSet.getInt(1);
 			}			

@@ -58,3 +58,15 @@
 		  <input type="submit" value="register">
 	</form>
 </div>
+
+<div id="restaurant_registration">
+	<h3>Restaurant Register</h3>
+	<form name="restaurant_registration_form" action="UrbanSpoonController" method="post">
+		<input type="hidden" name="action" value="restaurant_registration">
+		<input type="text" name="govt_reg_id" placeholder="Enter Registered Id" required /><br>
+		<input type="text" name="Name"	placeholder="Enter Restaurant Name" required /><br> 
+		<input type="password" name="rest_password" placeholder="Enter Password" required /><br>
+		 <input	type="text" name="logo_name" /><br><br>
+		  <input type="submit" value="Register">
+	</form>
+</div>

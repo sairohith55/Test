@@ -24,7 +24,7 @@ public class UrbanSpoonService {
 
 	public static List<Restaurant> getRestaurants(final int TOP) {
 		
-		List<Restaurant> restaurantsList = new RestaurantDAO().getRestaurants(TOP);
+		List<Restaurant> restaurantsList = RestaurantDAO.getRestaurants(TOP);
 		for (Restaurant restaurant : restaurantsList) {
 			List<Branch> branchesList = new BranchDAO().getBranches(restaurant.getId());
 			restaurant.setBranchesList(branchesList);
@@ -74,6 +74,24 @@ public class UrbanSpoonService {
 	   }
 	   else
 		   return null;
-}
+
+   }
+   
+   public static Restaurant insertRestaurant(HttpServletRequest request, HttpServletResponse response) throws UrbanspoonException{
+		
+		String name = request.getParameter("Name");
+		String pswd = request.getParameter("rest_password");
+		String logo_name = request.getParameter("logo_name");
+		String govt_reg_id = request.getParameter("govt_reg_id");
+		
+		Restaurant r = new Restaurant();
+		r.setGovtRegistrationId(govt_reg_id);
+		r.setName(name);
+		r.setPassword(pswd);
+		r.setLogoName(logo_name);
+		
+		Restaurant r1 = RestaurantDAO.insert(r);
+		return r1;
+  }
 
 }

@@ -1,7 +1,6 @@
 package com.ts.urbanspoon.dto;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Restaurant {
 	 private int id;
