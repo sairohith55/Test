@@ -50,11 +50,10 @@ public class RestaurantDAO {
 		try {
 			connection = DAOUtility.getConncetion();
 			preparedStatement = connection
-					.prepareStatement("insert into restaurant(govt_registration_id,name,password,logo_name) values(?,?,?,?)");
+					.prepareStatement("insert into restaurant(govt_registration_id,name,password) values(?,?,?)");
 			preparedStatement.setString(1, restaurant.getGovtRegistrationId());
 			preparedStatement.setString(2, restaurant.getName());
 			preparedStatement.setString(3, restaurant.getPassword());
-			preparedStatement.setString(4, restaurant.getLogoName());
 			if (preparedStatement.executeUpdate() > 0) {
 				restaurant.setId(DAOUtility.getLatestRestaurantId("restaurant"));
 			}
@@ -123,5 +122,27 @@ public class RestaurantDAO {
 			DAOUtility.close(resultSet, preparedStatement, connection);
 		}
 		return restaurant;
+	}
+	public static boolean updateLogoAddress(String fileName, long restaurantId) throws UrbanspoonException {
+
+		Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = DAOUtility.getConncetion();
+            preparedStatement = connection.prepareStatement("update restaurant set logo_name =? where restaurant_id = ?");
+            preparedStatement.setString(1, fileName);
+            preparedStatement.setLong(2, restaurantId);
+
+            if (preparedStatement.executeUpdate() > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new UrbanspoonException(e.toString());
+        } finally {
+            DAOUtility.close(preparedStatement, connection);
+
+        }
+        return false;
+
 	}
 }

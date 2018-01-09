@@ -1,10 +1,13 @@
 package com.ts.urbanspoon.service;
 
+import java.io.File;
 import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.*;
 
 import com.ts.urbanspoon.dao.BranchDAO;
 import com.ts.urbanspoon.dao.RecipeDAO;
@@ -16,7 +19,9 @@ import com.ts.urbanspoon.dto.Restaurant;
 import com.ts.urbanspoon.dto.User;
 import com.ts.urbanspoon.exception.UrbanspoonException;
 
-public class UrbanSpoonService {
+public class UrbanSpoonService{
+
+	private static final String IMAGESLOCATION = "D:\\Test\\UrbanSpoon\\WebContent\\images";
 
 	public UrbanSpoonService() {
 		
@@ -77,24 +82,48 @@ public class UrbanSpoonService {
 
    }
    
-   public static Restaurant insertRestaurant(HttpServletRequest request, HttpServletResponse response) throws UrbanspoonException{
+   public static boolean insertRestaurant(List<FileItem> fileItemsList, HttpServletRequest request, HttpServletResponse response) throws UrbanspoonException{
 		
-		String name = request.getParameter("Name");
-		String pswd = request.getParameter("rest_password");
-		String logo_name = request.getParameter("logo_name");
-		String govt_reg_id = request.getParameter("govt_reg_id");
-		
-		Restaurant r = new Restaurant();
-		r.setGovtRegistrationId(govt_reg_id);
-		r.setName(name);
-		r.setPassword(pswd);
-		r.setLogoName(logo_name);
-		
-		Restaurant r1 = RestaurantDAO.insert(r);
-		return r1;
+	   Restaurant restaurant = new Restaurant();
+       for (FileItem fileItem : fileItemsList) {
+           if (fileItem.isFormField()) {
+               if (fileItem.getFieldName().equals("govt_reg_id")) {
+                   restaurant.setGovtRegistrationId(fileItem.getString());
+               } else if (fileItem.getFieldName().equals("Name")) {
+                   restaurant.setName(fileItem.getString());
+               } else if (fileItem.getFieldName().equals("rest_password")) {
+                   restaurant.setPassword(fileItem.getString());
+               }
+           }
+       }
+       restaurant = RestaurantDAO.insert(restaurant);
+       if (restaurant.getId() != 0) {
+           for (FileItem fileItem : fileItemsList) {
+
+               storeImage(fileItem, "restaurants", restaurant.getId() + ".jpg");
+               RestaurantDAO.updateLogoAddress(restaurant.getId() + ".jpg", restaurant.getId());
+           }
+           return true;
+       }
+       return false;
+
   }
    
- public static Restaurant getRestaurant(HttpServletRequest request, HttpServletResponse response) throws UrbanspoonException {
+ private static boolean storeImage(FileItem fileItem, String imageType, String fileName) throws UrbanspoonException {
+
+	 if (null != fileItem) {
+         try {
+             String filePath = IMAGESLOCATION + "\\" + imageType + "\\" + fileName;
+             fileItem.write(new File(filePath));
+             return true;
+         } catch (Exception e) {
+             throw new UrbanspoonException(e.toString());
+         }
+     }
+     return false;
+}
+
+public static Restaurant getRestaurant(HttpServletRequest request, HttpServletResponse response) throws UrbanspoonException {
 	   
 	   Restaurant r = RestaurantDAO.getRestaurant(Integer.parseInt(request.getParameter("user_id")));
 	   if(r.getPassword().equals(request.getParameter("password")))
@@ -103,5 +132,17 @@ public class UrbanSpoonService {
 	   return null;
 
    }
+
+public static String getFormFeildValue(List<FileItem> fileItemsList, String fieldName) {
+	if (fileItemsList != null) {
+        for (FileItem fileItem : fileItemsList) {
+            if (fileItem.getFieldName().equals(fieldName)) {
+                return fileItem.getString();
+            }
+        }
+    }
+    return null;
+}
+
 
 }
