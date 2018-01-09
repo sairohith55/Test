@@ -21,77 +21,76 @@ import com.ts.urbanspoon.exception.UrbanspoonException;
 import com.ts.urbanspoon.service.UrbanSpoonService;
 
 @WebServlet("/UrbanSpoonController")
-public class UrbanSpoonController extends HttpServlet{
+public class UrbanSpoonController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-        public UrbanSpoonController() {
-        	System.out.println("Controller is invoked");
-        }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		List<Restaurant> rest=UrbanSpoonService.getRestaurants(3);
-		request.setAttribute("restaurantsList",rest);
-		System.out.println("rest:"+rest);
+	public UrbanSpoonController() {
+		System.out.println("Controller is invoked");
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		List<Restaurant> rest = UrbanSpoonService.getRestaurants(3);
+		request.setAttribute("restaurantsList", rest);
+		System.out.println("rest:" + rest);
 		request.getRequestDispatcher("home.jsp").forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-			
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		System.out.println(isMultipart);
-            if (isMultipart) {
-            	
-            	ServletFileUpload servletFileUpload = new ServletFileUpload(new DiskFileItemFactory() );
-                List<FileItem> fileItemsList;
-				try {
-					fileItemsList = servletFileUpload.parseRequest(request);
-					String action = UrbanSpoonService.getFormFeildValue(fileItemsList, "action");
-	                if (action != null) {
-	                    if (action.equals("restaurant_registration")) {
-	                        if (UrbanSpoonService.insertRestaurant(fileItemsList, request, response)) {
-	                        	PrintWriter w = response.getWriter();	
-	            				w.println("Restaurant added");
-	                        }
-	                    }     
-	                }
-				} catch (FileUploadException | UrbanspoonException e) {
-					e.printStackTrace();
-				}
-                	
-            }
-            else{
-        String s = request.getParameter("action");
-		if(s.equals("user_registration")){	
-			try {		
-				User u = UrbanSpoonService.insertUser(request,response);
-				System.out.println(u.getId());			
-			} catch (UrbanspoonException e) {
-				e.printStackTrace();
-			}
-		}
-		if(s.equals("login")){
-			if(request.getParameter("loginAs").equals("user")){
+		if (isMultipart) {
+
+			ServletFileUpload servletFileUpload = new ServletFileUpload(new DiskFileItemFactory());
+			List<FileItem> fileItemsList;
 			try {
-				User u = UrbanSpoonService.getUser(request,response);		
-	     		PrintWriter w = response.getWriter();	
-				w.println("Welcome "+u.getName());		
-			} catch (UrbanspoonException e) {	
+				fileItemsList = servletFileUpload.parseRequest(request);
+				String action = UrbanSpoonService.getFormFeildValue(fileItemsList, "action");
+				if (action != null) {
+					if (action.equals("restaurant_registration")) {
+						if (UrbanSpoonService.insertRestaurant(fileItemsList, request, response)) {
+							PrintWriter w = response.getWriter();
+							w.println("Restaurant added");
+						}
+					}
+				}
+			} catch (FileUploadException | UrbanspoonException e) {
 				e.printStackTrace();
 			}
-			}
-			if(request.getParameter("loginAs").equals("restaurant")){
+
+		} else {
+			String s = request.getParameter("action");
+			if (s.equals("user_registration")) {
 				try {
-					Restaurant r = UrbanSpoonService.getRestaurant(request, response);		
-		     		PrintWriter w = response.getWriter();	
-					w.println("Welcome "+r.getName());		
-				} catch (UrbanspoonException e) {	
+					User u = UrbanSpoonService.insertUser(request, response);
+					System.out.println(u.getId());
+				} catch (UrbanspoonException e) {
 					e.printStackTrace();
 				}
+			}
+			if (s.equals("login")) {
+				if (request.getParameter("loginAs").equals("user")) {
+					try {
+						User u = UrbanSpoonService.getUser(request, response);
+						PrintWriter w = response.getWriter();
+						w.println("Welcome " + u.getName());
+					} catch (UrbanspoonException e) {
+						e.printStackTrace();
+					}
 				}
+				if (request.getParameter("loginAs").equals("restaurant")) {
+					try {
+						Restaurant r = UrbanSpoonService.getRestaurant(request, response);
+						PrintWriter w = response.getWriter();
+						w.println("Welcome " + r.getName());
+					} catch (UrbanspoonException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 		}
-     }
 
 	}
 }
-	
